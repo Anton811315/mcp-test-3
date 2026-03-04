@@ -2,14 +2,21 @@ FROM python:3.12-alpine
 
 WORKDIR /app
 
-# Устанавливаем nmap
+RUN pip install --no-cache-dir mcp
+
+# Пишем минимальный MCP-сервер с одним tool "ping"
 RUN apk add --no-cache nmap
+RUN cat > /app/server.py <<'PY'
+from mcp.server.fastmcp import FastMCP
 
-# Устанавливаем Flask
-RUN pip install --no-cache-dir flask
+mcp = FastMCP("test-mcp")
 
-# Копируем серверный файл в контейнер
-COPY server.py /app/server.py
+@mcp.tool()
+def ping(text: str = "hello") -> str:
+    return f"pong: {text}"
 
-# Устанавливаем команду запуска
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
+PY
+
 CMD ["python", "/app/server.py"]
