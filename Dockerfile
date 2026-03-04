@@ -1,13 +1,11 @@
-# Используем официальный образ Python на базе Alpine
 FROM python:3.12-alpine
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Устанавливаем необходимые утилиты: nmap
+# Устанавливаем nmap
 RUN apk add --no-cache nmap
 
-# Устанавливаем Python-пакеты
+# Устанавливаем Flask
 RUN pip install --no-cache-dir flask
 
 # Копируем серверный файл в контейнер

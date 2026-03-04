@@ -18,7 +18,7 @@ def handle_request():
 
         # Проверяем метод
         if data.get("method") == "ping":
-            return jsonify({"jsonrpc": "2.0", "result": f"pong: {data['params'].get('text', 'hello')}", "id": data.get("id")})
+            return jsonify({"jsonrpc": "2.0", "result": "pong", "id": data.get("id")})
         elif data.get("method") == "initialize":
             return jsonify({"jsonrpc": "2.0", "result": {"status": "initialized"}, "id": data.get("id")})
         else:
