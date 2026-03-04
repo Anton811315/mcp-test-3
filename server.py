@@ -30,11 +30,10 @@ def handle_request():
 if __name__ == "__main__":
     import os
     import logging
-    from werkzeug.serving import WSGIRequestHandler
+    from waitress import serve
 
     # Отключаем вывод служебных сообщений Flask
     logging.getLogger('werkzeug').setLevel(logging.ERROR)
-    WSGIRequestHandler.protocol_version = "HTTP/1.1"
 
-    # Запуск HTTP-сервера на порту 8080
-    app.run(host="0.0.0.0", port=8080)
+    # Используем Waitress в качестве WSGI-сервера
+    serve(app, host="0.0.0.0", port=8080)
